@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SmartLab</string>
+    <string name="skip">Пропустить</string>
+    <string name="close">Завершить</string>
+    <string name="next">Далее</string>
+    <string name="board1title">Анализы</string>
+    <string name="board2title">Уведомления</string>
+    <string name="board3title">Мониторинг</string>
+    <string name="board1text">Экспресс сбор и получение проб</string>
+    <string name="board2text">Вы быстро узнаете о результатах</string>
+    <string name="board3text">Наши врачи всегда наблюдают за вашими показателями здоровья</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="info">Войдите чтобы пользоваться фунциями приложения</string>
+    <string name="info1">Вход по E-mail</string>
+    <string name="info2">Или войдите с помощью</string>
+    <string name="yandex">Войти с Яндекс</string>
+</resources>

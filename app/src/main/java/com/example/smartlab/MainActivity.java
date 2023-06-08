@@ -23,6 +23,7 @@ Layout layout;
         board1 = findViewById(R.id.board1);
         board2 = findViewById(R.id.board2);
         board3 = findViewById(R.id.board3);
+        board1.setImageResource(R.drawable.ellipse_1);
         illustration = findViewById(R.id.illustration);
     }
     public void onClick1(View view){

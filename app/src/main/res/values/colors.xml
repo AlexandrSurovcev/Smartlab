@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#1A6FED</color>
+    <color name="disable">#C8D3FA</color>
     <color name="blue1">#57A8FE</color>
     <color name="edittext">#F4F4F8</color>
     <color name="editext1">#EAEAEA</color>

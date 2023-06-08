@@ -1,12 +1,15 @@
 package com.example.smartlab;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PinCode extends AppCompatActivity {
 TextView btnNum1, btnNum2, btnNum3,btnNum4,btnNum5,btnNum6,btnNum7,btnNum8,btnNum9,btnNum0, df;
@@ -33,6 +36,7 @@ imageNumber imagenumber = new imageNumber();
         num3 = findViewById(R.id.num3);
         num4 = findViewById(R.id.num4);
         df = findViewById(R.id.df);
+
     }
     public void onClick(View view){
         int x = 0;
@@ -56,7 +60,7 @@ imageNumber imagenumber = new imageNumber();
                 Intent intent = new Intent(PinCode.this, CreateCardPatient.class);
                 startActivity(intent);
             }
-            df.setText(pincode);
+            Toast.makeText(getApplicationContext(),pincode,Toast.LENGTH_SHORT).show();
         }
     }
     public void onClick1(View view){
@@ -64,7 +68,7 @@ imageNumber imagenumber = new imageNumber();
         String str = new StringBuilder(s).deleteCharAt(s.length()-1).toString();
         pincode = str;
         imagenumber.setImg(num1,num2,num3,num4);
-        df.setText(pincode);
+        Toast.makeText(getApplicationContext(),pincode,Toast.LENGTH_SHORT).show();
     }
     public void Next(View view){
         Intent intent = new Intent(PinCode.this, CreateCardPatient.class);

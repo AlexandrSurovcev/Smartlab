@@ -20,4 +20,11 @@ public class EnableTextView {
         textView.setTextColor(ContextCompat.getColor(context, R.color.hintcolor));
         textView.setBackgroundResource(R.drawable.disabledtextview);
     }
+
+    public void onEnableBtn(TextView textView, Context context){
+        textView.setBackgroundResource(R.drawable.enabledbutton);
+    }
+    public void onDisableBtn(TextView textView, Context context){
+        textView.setBackgroundResource(R.drawable.disabledbutton);
+    }
 }

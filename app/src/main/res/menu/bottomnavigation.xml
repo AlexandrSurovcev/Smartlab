@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_analys"
+        android:icon="@drawable/analys"
+        android:title="Анализы" />
 
+    <item
+        android:id="@+id/navigation_result"
+        android:icon="@drawable/result"
+        android:title="Результаты" />
+
+    <item
+        android:id="@+id/navigation_support"
+        android:icon="@drawable/support"
+        android:title="Поддержка" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile"
+        android:title="Профиль" />
 </menu>

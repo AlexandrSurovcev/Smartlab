@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"/>
     <TextView
-        android:layout_marginTop="138dp"
+        android:layout_marginTop="188dp"
         android:textColor="@color/hintcolor"
         android:layout_gravity="center"
         android:paddingHorizontal="20dp"

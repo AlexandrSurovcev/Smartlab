@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class Analys extends Fragment {
-    TextView popular,covid, comprehensive;
+    TextView popular,covid, comprehensive,btnNext;
     EnableTextView enableText = new EnableTextView();
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class Analys extends Fragment {
         popular = v.findViewById(R.id.popular);
         covid = v.findViewById(R.id.covid);
         comprehensive = v.findViewById(R.id.comprehensive);
+        btnNext = v.findViewById(R.id.btnNext);
         enableText.onEnable(popular,getContext());
 
 
@@ -43,6 +44,13 @@ public class Analys extends Fragment {
             @Override
             public void onClick(View v) {
                 enableText.setAble(comprehensive, popular, covid, getContext());
+            }
+        });
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Order.class);
+                startActivity(intent);
             }
         });
         return v;

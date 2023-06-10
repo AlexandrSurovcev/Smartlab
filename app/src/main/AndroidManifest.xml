@@ -12,21 +12,24 @@
         android:theme="@style/Theme.SmartLab"
         tools:targetApi="31">
         <activity
-            android:name=".SplashScreen"
+            android:name=".Order"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true">
         </activity>
         <activity
             android:name=".ActivityMenu"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".PinCode"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".codemail"
             android:exported="false" />
@@ -38,8 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dialog_layout_style"
-    android:layout_gravity="bottom"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <LinearLayout
         android:layout_marginHorizontal="20dp"
@@ -20,7 +18,7 @@
         <ImageView
             android:id="@+id/btnClose"
             android:onClick="Close"
-            android:layout_marginLeft="210dp"
+            android:layout_marginLeft="200dp"
             android:background="@drawable/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -72,7 +70,7 @@
             android:textColor="@color/hintcolor"
             android:textStyle="bold"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 
@@ -85,7 +83,7 @@
             android:textStyle="bold"
             android:layout_marginLeft="16dp"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
         <TextView
@@ -96,7 +94,7 @@
             android:textColor="@color/hintcolor"
             android:textStyle="bold"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
@@ -108,7 +106,7 @@
             android:textColor="@color/hintcolor"
             android:textStyle="bold"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
@@ -126,7 +124,7 @@
             android:textColor="@color/hintcolor"
             android:textStyle="bold"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 
@@ -139,7 +137,7 @@
             android:textStyle="bold"
             android:layout_marginLeft="16dp"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
         <TextView
@@ -150,7 +148,7 @@
             android:textColor="@color/hintcolor"
             android:textStyle="bold"
             android:paddingVertical="14dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="18dp"
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />

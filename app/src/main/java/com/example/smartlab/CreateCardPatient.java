@@ -27,8 +27,7 @@ public class CreateCardPatient extends AppCompatActivity {
     SharedPreferences preferences;
     boolean name,patronymic,surname,dateofbirth,genderbool,btnEnabled;
     EnableTextView ETV = new EnableTextView();
-    TextView btnCreate,editname,editpatronymic,editsurname,editdateofbirth;
-    AutoCompleteTextView genders;
+    TextView btnCreate,editname,editpatronymic,editsurname,editdateofbirth,gendersList;
     Calendar calendar = Calendar.getInstance();
 TextView skip;
     @Override
@@ -37,11 +36,28 @@ TextView skip;
         setContentView(R.layout.activity_create_card_patient);
         skip = findViewById(R.id.skip);
         btnCreate = findViewById(R.id.btnCreate);
+        gendersList= findViewById(R.id.gendersList);
 //ВЫПАДАЮЩИЙ СПИСОК
-        genders = findViewById(R.id.genders);
+        AutoCompleteTextView genderChoice = findViewById(R.id.genderChoice);
         String[] gender = {"Мужской","Женский"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, R.layout.dropdown_items, gender);
-        genders.setAdapter(arrayAdapter);
+        genderChoice.setAdapter(arrayAdapter);
+        genderChoice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gendersList.setText(genderChoice.getText().toString());
+            }
+        });
 
 //поля ввода
         editname = findViewById(R.id.editname);
@@ -141,7 +157,7 @@ TextView skip;
                 }
             }
         });
-        genders.addTextChangedListener(new TextWatcher() {
+        gendersList.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -151,9 +167,9 @@ TextView skip;
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(genders.getText().toString().length()!=0){
+                if(gendersList.getText().toString().length()!=0){
                     genderbool=true;
-                    genders.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+                    gendersList.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
                     if(name && patronymic && surname&& dateofbirth && genderbool){
                         ETV.onEnableBtn(btnCreate,getApplicationContext());
                         btnEnabled = true;
@@ -173,7 +189,7 @@ TextView skip;
     public void getdateBtn(View view){
         new DatePickerDialog(CreateCardPatient.this,d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
-    // установка начальных даты
+    // установка начальных дат
     private void setInitialDate() {
 
         editdateofbirth.setText(DateUtils.formatDateTime(this,
@@ -196,7 +212,7 @@ TextView skip;
             String patronymicValue = editpatronymic.getText().toString();
             String surnameValue = editsurname.getText().toString();
             String dateValue = editdateofbirth.getText().toString();
-            String genderValue = genders.getText().toString();
+            String genderValue = gendersList.getText().toString();
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("name", nameValue);
             editor.putString("patronymic", patronymicValue);

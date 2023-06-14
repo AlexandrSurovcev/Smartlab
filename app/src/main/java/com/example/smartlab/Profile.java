@@ -29,9 +29,8 @@ import java.util.Calendar;
 
 public class Profile extends Fragment {
     SharedPreferences preferences;
-    TextView btnSave,editname,editpatronymic,editsurname,editdateofbirth;
+    TextView btnSave,editname,editpatronymic,editsurname,editdateofbirth,gendersList;
     boolean name,patronymic,surname,dateofbirth,genderbool,btnEnabled;
-    AutoCompleteTextView genders;
     EnableTextView ETV = new EnableTextView();
     Calendar calendar = Calendar.getInstance();
     @Override
@@ -42,25 +41,35 @@ public class Profile extends Fragment {
         editpatronymic = v.findViewById(R.id.editpatronymic);
         editsurname = v.findViewById(R.id.editsurname);
         editdateofbirth = v.findViewById(R.id.editdateofbirth);
+        gendersList = v.findViewById(R.id.gendersList);
         //ВЫПАДАЮЩИЙ СПИСОК
-        genders = v.findViewById(R.id.genders);
+        AutoCompleteTextView genderChoice = v.findViewById(R.id.genderChoice);
         String[] gender = {"Мужской","Женский"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), R.layout.dropdown_items, gender);
-        genders.setAdapter(arrayAdapter);
+        genderChoice.setAdapter(arrayAdapter);
+        genderChoice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gendersList.setText(genderChoice.getText().toString());
+            }
+        });
         //ПОЛЯ ВВОДА
         preferences = getActivity().getSharedPreferences("UserInfo", 0);
         editname.setText(preferences.getString("name",null));
         editpatronymic.setText(preferences.getString("patronymic",null));
         editsurname.setText(preferences.getString("surname",null));
         editdateofbirth.setText(preferences.getString("date",null));
-        genders.setText(preferences.getString("gender",null));
-
-        //Кнопка сохранить начальное состояние
-        if(name && patronymic && surname && dateofbirth && genderbool){
-            ETV.onEnableBtn(btnSave,getContext());
-            btnEnabled = true;
-        }
-
+        gendersList.setText(preferences.getString("gender",null));
         editname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -72,7 +81,7 @@ public class Profile extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if(editname.getText().toString().length()!=0){
                     name=true;
-                    if(name && patronymic && surname && dateofbirth && genderbool){
+                    if(name && patronymic && surname&& dateofbirth && genderbool){
                         ETV.onEnableBtn(btnSave,getContext());
                         btnEnabled = true;
                     }
@@ -94,7 +103,7 @@ public class Profile extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if(editpatronymic.getText().toString().length()!=0){
                     patronymic=true;
-                    if(name && patronymic && surname && dateofbirth && genderbool){
+                    if(name && patronymic && surname&& dateofbirth && genderbool){
                         ETV.onEnableBtn(btnSave,getContext());
                         btnEnabled = true;
                     }
@@ -116,7 +125,7 @@ public class Profile extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if(editsurname.getText().toString().length()!=0){
                     surname=true;
-                    if(name && patronymic && surname && dateofbirth && genderbool ){
+                    if(name && patronymic && surname&& dateofbirth && genderbool ){
                         ETV.onEnableBtn(btnSave,getContext());
                         btnEnabled = true;
                     }
@@ -151,7 +160,7 @@ public class Profile extends Fragment {
                 }
             }
         });
-        genders.addTextChangedListener(new TextWatcher() {
+        gendersList.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -161,10 +170,10 @@ public class Profile extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(genders.getText().toString().length()!=0){
+                if(gendersList.getText().toString().length()!=0){
                     genderbool=true;
-                    genders.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
-                    if(name && patronymic && surname && dateofbirth && genderbool){
+                    gendersList.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
+                    if(name && patronymic && surname&& dateofbirth && genderbool){
                         ETV.onEnableBtn(btnSave,getContext());
                         btnEnabled = true;
                     }
@@ -175,18 +184,16 @@ public class Profile extends Fragment {
                 }
             }
         });
-
-
         return v;
     }
     //ДАТА
     public void getdateBtn(View view){
-        new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(getContext(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
     // установка начальных даты
     private void setInitialDate() {
 
-        editdateofbirth.setText(DateUtils.formatDateTime(getActivity(),
+        editdateofbirth.setText(DateUtils.formatDateTime(getContext(),
                 calendar.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
@@ -199,22 +206,22 @@ public class Profile extends Fragment {
             setInitialDate();
         }
     };
-    public void onSave(View view){
-        if(btnEnabled){
+    //КНОПКА СОХРАНИТЬ
+    public void onSave(View view) {
+        if (btnEnabled) {
             String nameValue = editname.getText().toString();
             String patronymicValue = editpatronymic.getText().toString();
             String surnameValue = editsurname.getText().toString();
             String dateValue = editdateofbirth.getText().toString();
-            String genderValue = genders.getText().toString();
+            String genderValue = gendersList.getText().toString();
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("name", nameValue);
             editor.putString("patronymic", patronymicValue);
-            editor.putString("surname",surnameValue);
-            editor.putString("date",dateValue);
-            editor.putString("gender",genderValue);
+            editor.putString("surname", surnameValue);
+            editor.putString("date", dateValue);
+            editor.putString("gender", genderValue);
             editor.apply();
-            Toast.makeText(getContext(),"Успешно нахуй",Toast.LENGTH_SHORT).show();
-        }
-        else  Toast.makeText(getContext(),"Не все поля заполнены",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Готово", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
     }
 }

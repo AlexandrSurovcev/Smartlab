@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/bottom_sheet_container"
+    android:background="@drawable/bottom_sheet_dialog"
     android:orientation="vertical">
     <LinearLayout
         android:layout_marginHorizontal="20dp"
@@ -17,7 +19,6 @@
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/btnClose"
-            android:onClick="Close"
             android:layout_marginLeft="200dp"
             android:background="@drawable/close"
             android:layout_width="wrap_content"
@@ -32,23 +33,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="20dp"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <AutoCompleteTextView
-            android:id="@+id/genders"
-            android:background="@drawable/edittextstyle"
-            android:textSize="16dp"
-            android:textColor="@color/hintcolor"
-            android:text="Пол"
-            android:inputType="none"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"/>
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_marginTop="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_width="350dp"
+            android:layout_height="47dp">
+            <AutoCompleteTextView
+                android:id="@+id/dayChoice"
+                android:layout_gravity="center"
+                android:background="@drawable/edittextstyle"
+                android:textSize="16dp"
+                android:textColor="@color/hintcolor"
+                android:text="Пол"
+                android:inputType="none"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/daysList"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="15dp"
+            android:textSize="16dp"
+            android:paddingVertical="14dp"
+            android:textColor="@color/black"
+            android:background="@drawable/edittextstyle"
+            android:drawableRight="@drawable/drop"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+    </FrameLayout>
     <TextView
         android:layout_marginTop="32dp"
         android:text="@string/time"
@@ -154,7 +173,7 @@
             android:layout_height="48dp" />
     </LinearLayout>
     <TextView
-        android:id="@+id/btnCreate"
+        android:id="@+id/btnConfirm"
         android:textSize="17dp"
         android:layout_marginTop="48dp"
         android:layout_marginHorizontal="20dp"

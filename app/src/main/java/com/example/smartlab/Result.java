@@ -3,6 +3,7 @@ package com.example.smartlab;
 import static com.example.smartlab.R.layout.fragment_analys;
 import static com.example.smartlab.R.layout.fragment_result;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,5 +19,9 @@ public class Result extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(fragment_result, container, false);
         return v;
+    }
+    public void Back(View view){
+        Intent intent = new Intent(getContext(), Analys.class);
+        startActivity(intent);
     }
 }

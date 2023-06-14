@@ -87,24 +87,44 @@
         android:hint="Дата рождения"
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@android:color/transparent"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <AutoCompleteTextView
-            android:id="@+id/genders"
-            android:background="@drawable/edittextstyle"
-            android:textSize="16dp"
-            android:textColor="@color/hintcolor"
-            android:text="Пол"
-            android:inputType="none"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_marginTop="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_width="350dp"
+            android:layout_height="47dp">
+            <AutoCompleteTextView
+                android:id="@+id/genderChoice"
+                android:layout_gravity="center"
+                android:background="@drawable/edittextstyle"
+                android:textSize="16dp"
+                android:textColor="@color/hintcolor"
+                android:text="Пол"
+                android:inputType="none"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/gendersList"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="15dp"
+            android:textSize="16dp"
+            android:paddingVertical="14dp"
+            android:textColor="@color/black"
+            android:hint="Пол"
+            android:textColorHint="@color/hintcolor"
+            android:background="@drawable/edittextstyle"
+            android:drawableRight="@drawable/drop"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+    </FrameLayout>
+
     <TextView
         android:id="@+id/btnCreate"
         android:textSize="17dp"

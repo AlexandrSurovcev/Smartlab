@@ -1,6 +1,8 @@
 package com.example.smartlab;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -27,4 +29,5 @@ public class EnableTextView {
     public void onDisableBtn(TextView textView, Context context){
         textView.setBackgroundResource(R.drawable.disabledbutton);
     }
+
 }

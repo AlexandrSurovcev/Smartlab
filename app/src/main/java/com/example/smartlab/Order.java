@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,10 @@ import java.util.Locale;
 public class Order extends AppCompatActivity {
     TextView dateshow,patientsList;
     AutoCompleteTextView patientsChoice;
+    //PHONE
+    EditText phoneEdit;
+    PhoneKit phoneKit = new PhoneKit();
+
     SharedPreferences preferences;
     Calendar calendar = Calendar.getInstance();
     @Override
@@ -34,6 +39,25 @@ public class Order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         preferences = getSharedPreferences("UserInfo", 0);
+        //НОМЕР ТЕЛЕФОНА
+        phoneEdit = findViewById(R.id.phoneEdit);
+        phoneEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                phoneKit.phoneKit(editable);
+            }
+        });
+
         dateshow = findViewById(R.id.dateshow);
         dateshow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -58,24 +58,33 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
                 String titledialog = catalogModel.getTitle();
                 String descriptiondialog = catalogModel.getDescription();
                 String timedialog = catalogModel.getTimeResult();
+                String preparationdialog=catalogModel.getPreparation();
+                String biodialog=catalogModel.getBio();
+                String pricedialog=catalogModel.getPrice();
 
 
-                showBottomDialog(titledialog,descriptiondialog,timedialog);}});}
+                showBottomDialog(titledialog,descriptiondialog,timedialog,preparationdialog,biodialog,pricedialog);}});}
     @Override
     public int getItemCount() {
 // Получает всёё количесво элементов RecyclerView
         return listRecyclerItem.size();}
 
-    private void showBottomDialog(String title,String description, String time) {
+    private void showBottomDialog(String title,String description, String time,String preparation, String bio,String price) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.catalog_description_layout);
         TextView titleTXT = dialog.findViewById(R.id.title);
         TextView descriptionTXT = dialog.findViewById(R.id.description);
         TextView timeTXT = dialog.findViewById(R.id.time_result);
+        TextView preparationTXT = dialog.findViewById(R.id.preparation);
+        TextView bioTXT=dialog.findViewById(R.id.bio);
+        TextView btnAdd=dialog.findViewById(R.id.btnAdd);
+        btnAdd.setText("Добавить за "+price);
         titleTXT.setText(title);
         descriptionTXT.setText(description);
         timeTXT.setText(time);
+        preparationTXT.setText(preparation);
+        bioTXT.setText(bio);
 
 
 

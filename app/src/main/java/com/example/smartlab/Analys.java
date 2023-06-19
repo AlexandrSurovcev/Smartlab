@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Analys extends Fragment {
-    TextView popular,covid, comprehensive,btnNext;
+    TextView popular,covid, comprehensive,btnNext,txtPrice;
     EnableTextView enableText = new EnableTextView();
     JSONArray array,arraybanner;
     private RecyclerView recyclerView,listBanner;
@@ -46,13 +46,14 @@ public class Analys extends Fragment {
         comprehensive = v.findViewById(R.id.comprehensive);
         btnNext = v.findViewById(R.id.btnNext);
         enableText.onEnable(popular,getContext());
+        txtPrice = v.findViewById(R.id.price);
         //
         new GetTaskBanner().execute(new JSONObject());
         new GetTask().execute(new JSONObject());
         recyclerView=(RecyclerView) v.findViewById(R.id.listCatalog);
         listBanner=(RecyclerView) v.findViewById(R.id.listBanner);
         //
-        CatalogAdapterT adapter = new CatalogAdapterT(getContext(),viewItems);
+        CatalogAdapterT adapter = new CatalogAdapterT(getContext(),viewItems,txtPrice);
         recyclerView.setAdapter(adapter);
         // Присваиваем LayoutManager что бы изменить направление RecyclerView
         BannerAdapterT adapt = new BannerAdapterT(getContext(),viewItems1);
@@ -171,7 +172,6 @@ public class Analys extends Fragment {
                 String bio = itemObj.getString("bio");
                 CatalogModel catalogModel = new CatalogModel(id, title, description, price,time_result,preparation,bio);
                 viewItems.add(catalogModel);
-
             }
             for (int i=0;i<arraybanner.length();++i){
                 JSONObject itemObj=arraybanner.getJSONObject(i);

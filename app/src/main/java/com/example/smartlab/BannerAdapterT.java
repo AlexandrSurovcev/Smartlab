@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class BannerAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -49,7 +50,9 @@ public class BannerAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHolde
         _holder.id.setText(bannerModel.getId());
         _holder.name.setText(bannerModel.getName());
         _holder.description.setText(bannerModel.getDescription());
-        _holder.price.setText(bannerModel.getPrice());
+        Double price = Double.parseDouble(bannerModel.getPrice());
+        BigInteger price1 = BigInteger.valueOf(price.intValue());
+        _holder.price.setText(price1+" ₽");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

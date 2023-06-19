@@ -36,7 +36,7 @@ public class ActivityMenu extends AppCompatActivity {
                     selectedFragment = new Result();
                     break;
                 case R.id.navigation_support:
-                    selectedFragment = new Analys();
+                    selectedFragment = new Result();
                     break;
                 case R.id.navigation_profile:
                     selectedFragment = new Profile();

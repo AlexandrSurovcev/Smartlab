@@ -15,27 +15,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
-
     private final Context context;
     private final List<Object> listRecyclerItem;
-    public CatalogAdapterT(Context context, List<Object> listRecyclerItem) {
+    private final TextView txtPrice;
+    Double totalPrice = 0.0;
+    public CatalogAdapterT(Context context, List<Object> listRecyclerItem,TextView txtPrice) {
         this.context = context;
-        this.listRecyclerItem = listRecyclerItem;}
+        this.listRecyclerItem = listRecyclerItem;
+        this.txtPrice = txtPrice;}
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         // Присваиваем поля для заполнения элемента RecyclerView
-        TextView id, title, description, price,time_result;
+        TextView id, title, description, price,time_result,btnAdd;
         public ItemViewHolder(View itemView) {
             super(itemView);
             id = (TextView) itemView.findViewById(R.id.id);
             title=(TextView) itemView.findViewById(R.id.title);
             description=(TextView) itemView.findViewById(R.id.description);
             time_result = (TextView)itemView.findViewById(R.id.time_result);
-            price=(TextView) itemView.findViewById(R.id.price);}}
+            price=(TextView) itemView.findViewById(R.id.price);
+            btnAdd=(TextView)itemView.findViewById(R.id.add);
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adddeletebtnstyle(btnAdd,price);
+                BigInteger price = BigInteger.valueOf(totalPrice.intValue());
+                txtPrice.setText(price.toString()+" ₽");
+            }
+        });}}
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,16 +73,15 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
                 String timedialog = catalogModel.getTimeResult();
                 String preparationdialog=catalogModel.getPreparation();
                 String biodialog=catalogModel.getBio();
-                String pricedialog=catalogModel.getPrice();
+                Double pricedb = Double.parseDouble(catalogModel.getPrice());
 
-
-                showBottomDialog(titledialog,descriptiondialog,timedialog,preparationdialog,biodialog,pricedialog);}});}
+                showBottomDialog(titledialog,descriptiondialog,timedialog,preparationdialog,biodialog,pricedb,_holder.btnAdd);}});}
     @Override
     public int getItemCount() {
 // Получает всёё количесво элементов RecyclerView
         return listRecyclerItem.size();}
 
-    private void showBottomDialog(String title,String description, String time,String preparation, String bio,String price) {
+    private void showBottomDialog(String title,String description, String time,String preparation, String bio,Double price,TextView button) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.catalog_description_layout);
@@ -78,17 +90,25 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         TextView timeTXT = dialog.findViewById(R.id.time_result);
         TextView preparationTXT = dialog.findViewById(R.id.preparation);
         TextView bioTXT=dialog.findViewById(R.id.bio);
-        TextView btnAdd=dialog.findViewById(R.id.btnAdd);
-        btnAdd.setText("Добавить за "+price);
+        TextView btnAdd1=dialog.findViewById(R.id.btnAdd);
+
+
+
+
+        btnAdd1.setText("Добавить за "+price+" ₽");
         titleTXT.setText(title);
         descriptionTXT.setText(description);
         timeTXT.setText(time);
         preparationTXT.setText(preparation);
         bioTXT.setText(bio);
-
-
-
         ImageView btnClose = dialog.findViewById(R.id.btnClose);
+        btnAdd1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adddeletebtnstyle1(button,price);
+                dialog.dismiss();
+            }
+        });
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +120,36 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+    protected void adddeletebtnstyle(TextView textView,TextView price){
+        if(textView.getText().equals("Добавить")){
+            textView.setText("Убрать");
+            totalPrice+=Double.parseDouble(price.getText().toString());
+            textView.setBackgroundResource(R.drawable.addpatientstyle);
+            textView.setTextColor(ContextCompat.getColor(context, R.color.blue));
+        }else{
+            textView.setText("Добавить");
+            totalPrice-=Double.parseDouble(price.getText().toString());
+            textView.setBackgroundResource(R.drawable.enabledtextview);
+            textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
+    }
+    protected void adddeletebtnstyle1(TextView textView,Double price){
+        if(textView.getText().equals("Добавить")){
+            textView.setText("Убрать");
+            totalPrice+=price;
+            BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
+            txtPrice.setText(price1.toString()+" ₽");
+            textView.setBackgroundResource(R.drawable.addpatientstyle);
+            textView.setTextColor(ContextCompat.getColor(context, R.color.blue));
+        }else{
+            textView.setText("Добавить");
+            totalPrice-=price;
+            BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
+            txtPrice.setText(price1.toString()+" ₽");
+            textView.setBackgroundResource(R.drawable.enabledtextview);
+            textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
     }
 }
 

@@ -205,9 +205,10 @@ TextView skip;
             setInitialDate();
         }
     };
-
+    boolean createdcard;
     public void onCreate(View view){
         if(btnEnabled){
+            createdcard = true;
             String nameValue = editname.getText().toString();
             String patronymicValue = editpatronymic.getText().toString();
             String surnameValue = editsurname.getText().toString();
@@ -219,6 +220,7 @@ TextView skip;
             editor.putString("surname",surnameValue);
             editor.putString("date",dateValue);
             editor.putString("gender",genderValue);
+            editor.putBoolean("createdcard", createdcard);
             editor.apply();
             Intent intent = new Intent(CreateCardPatient.this,ActivityMenu.class);
             startActivity(intent);

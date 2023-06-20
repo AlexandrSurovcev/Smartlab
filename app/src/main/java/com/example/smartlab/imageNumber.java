@@ -38,4 +38,14 @@ public class imageNumber {
             number1 = false;
         }
     }
+    public void setDisable(ImageView img1, ImageView img2, ImageView img3, ImageView img4){
+        img4.setImageResource(R.drawable.ellipse_58);
+        number4 = false;
+        img3.setImageResource(R.drawable.ellipse_58);
+        number3 = false;
+        img2.setImageResource(R.drawable.ellipse_58);
+        number2 = false;
+        img1.setImageResource(R.drawable.ellipse_58);
+        number1 = false;
+    }
 }

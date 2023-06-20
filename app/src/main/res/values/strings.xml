@@ -11,7 +11,7 @@
     <string name="info">Войдите чтобы пользоваться фунциями приложения</string>
     <string name="info1">Вход по E-mail</string>
     <string name="info2">Или войдите с помощью</string>
-    <string name="info3">Без карты пциента вы не сможете заказать анализы.</string>
+    <string name="info3">Без карты пациента вы не сможете заказать анализы.</string>
     <string name="info4">В картах пациентов будут храниться результаты анализов вас и ваших близких.</string>
     <string name="yandex">Войти с Яндекс</string>
     <string name="emailcode">Введите код из E-mail</string>

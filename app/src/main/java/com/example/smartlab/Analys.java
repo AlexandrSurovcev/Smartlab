@@ -2,7 +2,10 @@ package com.example.smartlab;
 
 import static com.example.smartlab.R.layout.fragment_analys;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,11 +16,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +40,9 @@ import java.util.List;
 
 public class Analys extends Fragment {
     TextView btnNext,txtPrice;
-    EnableTextView enableText = new EnableTextView();
     RelativeLayout layoutbasket;
     JSONArray array,arraybanner,arraycategory;
+
     private RecyclerView recyclerView,listBanner,listCategory;
     private List<Object> viewItems = new ArrayList<>();
     private List<Object> viewItems1 = new ArrayList<>();
@@ -62,21 +69,48 @@ public class Analys extends Fragment {
         listBanner.setAdapter(adapt);
         CategoryAdapterT adapterCat = new CategoryAdapterT(getContext(),viewItemsCategory);
         listCategory.setAdapter(adapterCat);
-
-
-
-
-
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Order.class);
-                startActivity(intent);
+                String price = removeLastChar(txtPrice.getText().toString());
+                String price1 = removeLastChar(price);
+                Toast.makeText(getContext(),price1,Toast.LENGTH_SHORT).show();
+                showBottomDialog(price,price1);
             }
         });
         return v;
     }
+    private void showBottomDialog(String pricesum,String price1){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.basket_layout);
+        TextView price = dialog.findViewById(R.id.price);
+        price.setText(pricesum);
+
+        new GetTaskBanner().execute(new JSONObject());
+        RecyclerView basket = dialog.findViewById(R.id.listBaskets);
+        BasketAdapterT adapter = new BasketAdapterT(getContext(),viewItems,price1);
+        basket.setAdapter(adapter);
+
+        ImageView btnBack = dialog.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+    }
+
+
+
+
     private class GetTask extends AsyncTask<JSONObject, Void, String> {
         @Override
         protected String doInBackground(JSONObject... jsonObjects) {
@@ -217,5 +251,9 @@ public class Analys extends Fragment {
     }
 
 
-
+//УДАЛИТЬ ПОСЛЕДНЮЮ СТРОКУ
+    public static String removeLastChar(String str){
+        return (str == null||str.length()==0) ?null
+            :(str.substring(0,str.length()-1));
+        }
 }

@@ -36,8 +36,13 @@ public class SplashScreen extends AppCompatActivity {
                         Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                         startActivity(intent);
                     }else {
-                        Intent intent = new Intent(SplashScreen.this, SignLogin.class);
-                        startActivity(intent);
+                        if(preferences.getBoolean("pincodeisVerify",false)){
+                            Intent intent = new Intent(SplashScreen.this, PinCode.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(SplashScreen.this, SignLogin.class);
+                            startActivity(intent);
+                        }
                     }
 
 

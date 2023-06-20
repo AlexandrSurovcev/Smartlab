@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Analys">
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="620dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:paddingLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/edittextstyle"
+            android:textSize="16dp"
+            android:textColorHint="@color/hintcolor"
+            android:drawableLeft="@drawable/find"
+            android:hint="@string/find"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <EditText
-                android:paddingLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/edittextstyle"
-                android:textSize="16dp"
-                android:textColorHint="@color/hintcolor"
-                android:drawableLeft="@drawable/find"
-                android:hint="@string/find"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"/>
+
             <TextView
                 android:layout_marginTop="32dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/hintcolor"
-                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 android:textSize="17dp"
                 android:text="@string/news"
                 android:layout_width="wrap_content"
@@ -49,60 +54,25 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/hintcolor"
-                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 android:textSize="17dp"
                 android:text="@string/catalog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <HorizontalScrollView
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listCategory"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="21dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
 
-                    <TextView
-                        android:id="@+id/popular"
-                        android:text="Популярные"
-                        android:background="@drawable/disabledtextview"
-                        android:textSize="15dp"
-                        android:textColor="@color/hintcolor"
-                        android:textStyle="bold"
-                        android:paddingVertical="14dp"
-                        android:paddingHorizontal="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp" />
 
-                    <TextView
-                        android:id="@+id/covid"
-                        android:text="Covid"
-                        android:background="@drawable/disabledtextview"
-                        android:textSize="15dp"
-                        android:textColor="@color/hintcolor"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="16dp"
-                        android:paddingVertical="14dp"
-                        android:paddingHorizontal="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp" />
-                    <TextView
-                        android:id="@+id/comprehensive"
-                        android:text="Комплексные"
-                        android:background="@drawable/disabledtextview"
-                        android:textSize="15dp"
-                        android:textColor="@color/hintcolor"
-                        android:textStyle="bold"
-                        android:paddingVertical="14dp"
-                        android:paddingHorizontal="20dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp" />
-                </LinearLayout>
-            </HorizontalScrollView>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listCatalog"
                 android:layout_marginTop="16dp"
@@ -110,12 +80,19 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_height="550dp">
+                android:layout_height="455dp">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:paddingTop="24dp"
+        </ScrollView>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:visibility="invisible"
+        android:id="@+id/layoutbasket"
+        android:layout_alignParentBottom="true"
+        android:paddingVertical="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -136,12 +113,11 @@
             android:layout_marginHorizontal="20dp"
             android:text="0 ₽"
             android:textAlignment="textEnd"
-
             android:padding="15dp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="56dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

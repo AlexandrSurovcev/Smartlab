@@ -4,6 +4,7 @@ package com.example.smartlab;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +27,13 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
     private final Context context;
     private final List<Object> listRecyclerItem;
     private final TextView txtPrice;
+    private final RelativeLayout layout;
     Double totalPrice = 0.0;
-    public CatalogAdapterT(Context context, List<Object> listRecyclerItem,TextView txtPrice) {
+    public CatalogAdapterT(Context context, List<Object> listRecyclerItem, TextView txtPrice, RelativeLayout layout) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
-        this.txtPrice = txtPrice;}
+        this.txtPrice = txtPrice;
+        this.layout = layout;}
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         // Присваиваем поля для заполнения элемента RecyclerView
         TextView id, title, description, price,time_result,btnAdd;
@@ -45,8 +49,11 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onClick(View view) {
                 adddeletebtnstyle(btnAdd,price);
-                BigInteger price = BigInteger.valueOf(totalPrice.intValue());
-                txtPrice.setText(price.toString()+" ₽");
+                BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
+                txtPrice.setText(price1+" ₽");
+                if(txtPrice.getText().equals("0 ₽")){
+                    layout.setVisibility(View.INVISIBLE);
+                }else layout.setVisibility(View.VISIBLE);
             }
         });}}
 
@@ -62,7 +69,9 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         CatalogModel catalogModel = (CatalogModel) listRecyclerItem.get(position);
         _holder.id.setText(catalogModel.getId());
         _holder.title.setText(catalogModel.getTitle());
-        _holder.price.setText(catalogModel.getPrice());
+        Double pricedb = Double.parseDouble(catalogModel.getPrice());
+        BigInteger price = BigInteger.valueOf(pricedb.intValue());
+        _holder.price.setText(price.toString());
         _holder.time_result.setText(catalogModel.getTimeResult());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +102,9 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         TextView btnAdd1=dialog.findViewById(R.id.btnAdd);
 
 
+        BigInteger price1 = BigInteger.valueOf(price.intValue());
 
-
-        btnAdd1.setText("Добавить за "+price+" ₽");
+        btnAdd1.setText("Добавить за "+price1+" ₽");
         titleTXT.setText(title);
         descriptionTXT.setText(description);
         timeTXT.setText(time);
@@ -106,6 +115,9 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onClick(View view) {
                 adddeletebtnstyle1(button,price);
+                if(txtPrice.getText().equals("0 ₽")){
+                    layout.setVisibility(View.INVISIBLE);
+                }else layout.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
         });

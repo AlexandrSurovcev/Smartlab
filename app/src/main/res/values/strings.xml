@@ -44,7 +44,7 @@
     <string name="addpatient">Добавить пациента</string>
     <string name="addpatient1">Добавить еще пациента</string>
 
-    <string name="find">Искать анализы</string>
+    <string name="find">   Искать анализы</string>
     <string name="news">Акции и новости</string>
     <string name="catalog">Каталог анализов</string>
     <string name="catalog1">Популярные</string>

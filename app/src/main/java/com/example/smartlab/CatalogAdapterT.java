@@ -3,6 +3,7 @@ package com.example.smartlab;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,7 +22,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -28,6 +33,8 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
     private final List<Object> listRecyclerItem;
     private final TextView txtPrice;
     private final RelativeLayout layout;
+    private ArrayList<Object> arrPackage;
+    SharedPreferences cartItems;
     Double totalPrice = 0.0;
     public CatalogAdapterT(Context context, List<Object> listRecyclerItem, TextView txtPrice, RelativeLayout layout) {
         this.context = context;
@@ -46,7 +53,7 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
             price=(TextView) itemView.findViewById(R.id.price);
             btnAdd=(TextView)itemView.findViewById(R.id.add);
             btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
+                @Override
             public void onClick(View view) {
                 adddeletebtnstyle(btnAdd,price);
                 BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
@@ -73,6 +80,27 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         BigInteger price = BigInteger.valueOf(pricedb.intValue());
         _holder.price.setText(price.toString());
         _holder.time_result.setText(catalogModel.getTimeResult());
+        _holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            boolean isPressed = false;
+            @Override
+            public void onClick(View view) {
+                arrPackage = new ArrayList<>();
+                if(!isPressed){
+                    addedItems[position] = true;
+                    arrPackage.add(String.valueOf(catalogModel.getId()));
+                    arrPackage.add(String.valueOf(catalogModel.getTitle()));
+                    arrPackage.add(String.valueOf(catalogModel.getDescription()));
+                    arrPackage.add(String.valueOf(catalogModel.getPrice()));
+                    arrPackage.add(String.valueOf(catalogModel.getTimeResult()));
+                    arrPackage.add(String.valueOf(catalogModel.getPreparation()));
+                    arrPackage.add(String.valueOf(catalogModel.getBio()));
+                    Gson gson = new Gson();
+                    String json = gson.toJson(arrPackage);
+                    SharedPreferences.Editor editor = cartItems.edit();
+
+                }
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +143,7 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onClick(View view) {
                 adddeletebtnstyle1(button,price);
+
                 if(txtPrice.getText().equals("0 ₽")){
                     layout.setVisibility(View.INVISIBLE);
                 }else layout.setVisibility(View.VISIBLE);

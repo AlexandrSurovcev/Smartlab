@@ -9,44 +9,41 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ActivityMenu extends AppCompatActivity {
+public class ActivityMenu extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+
+    Profile profileFragment = new Profile();
+    Analys analysisFragment = new Analys();
+    Result resultFragment  = new Result();
+    BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_analys);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, analysisFragment).commit();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Analys()).commit();
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
-
             switch (item.getItemId()) {
                 case R.id.navigation_analys:
-                    if(selectedFragment == new Analys()){
-                        return false;
-                    }
-                    else selectedFragment = new Analys();
-                    break;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, analysisFragment).commit();
+                        return true;
                 case R.id.navigation_result:
-                    selectedFragment = new Result();
-                    break;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, resultFragment).commit();
+                    return true;
                 case R.id.navigation_support:
-                    selectedFragment = new Result();
-                    break;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, resultFragment).commit();
+                    return true;
                 case R.id.navigation_profile:
-                    selectedFragment = new Profile();
-                    break;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
+                    return true;
             }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
-
-            return true;
+            return false;
 
         }
-    };
-}
+    }

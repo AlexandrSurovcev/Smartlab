@@ -1,9 +1,11 @@
 package com.example.smartlab;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.smartlab.R.layout.fragment_analys;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,6 +28,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +38,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,11 +48,13 @@ public class Analys extends Fragment {
     TextView btnNext,txtPrice;
     RelativeLayout layoutbasket;
     JSONArray array,arraybanner,arraycategory;
-
     private RecyclerView recyclerView,listBanner,listCategory;
     private List<Object> viewItems = new ArrayList<>();
     private List<Object> viewItems1 = new ArrayList<>();
     private List<Object> viewItemsCategory = new ArrayList<>();
+    ArrayList<Object> catalogItemsList;
+    SharedPreferences items;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,14 +81,27 @@ public class Analys extends Fragment {
             @Override
             public void onClick(View view) {
                 String price = removeLastChar(txtPrice.getText().toString());
-                String price1 = removeLastChar(price);
-                Toast.makeText(getContext(),price1,Toast.LENGTH_SHORT).show();
-                showBottomDialog(price,price1);
+                showBottomDialog(price);
             }
         });
         return v;
     }
-    private void showBottomDialog(String pricesum,String price1){
+    public void initData(){
+        items = getContext().getSharedPreferences("ITEMS", MODE_PRIVATE);
+        catalogItemsList = new ArrayList<>();
+        Gson gson = new Gson();
+        for (int i = 1;i<100;i++){
+            String json;
+            if(items.contains("item "+i)){
+                Type type = new TypeToken<List<String>>(){}.getType();
+                List<String>arrPackageData = gson.fromJson(json,type);
+                ArrayList<String>newItem = new ArrayList<>(arrPackageData);
+                CatalogItem catalogItem = new CatalogItem(Integer.parseInt(newItem.get(0)),Integer.parseInt(newItem.get(1)),Integer.parseInt(newItem.get(2)),Integer.parseInt(newItem.get(3)));
+                catalogItem.add(catalogItem);
+            }
+        }
+    }
+    private void showBottomDialog(String pricesum){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.basket_layout);
@@ -89,7 +110,7 @@ public class Analys extends Fragment {
 
         new GetTaskBanner().execute(new JSONObject());
         RecyclerView basket = dialog.findViewById(R.id.listBaskets);
-        BasketAdapterT adapter = new BasketAdapterT(getContext(),viewItems,price1);
+        BasketAdapterT adapter = new BasketAdapterT(getContext(),viewItems);
         basket.setAdapter(adapter);
 
         ImageView btnBack = dialog.findViewById(R.id.btnBack);
@@ -216,6 +237,9 @@ public class Analys extends Fragment {
     }
 
     private void addItemsFromJSON() {
+        viewItems.clear();
+        viewItems1.clear();
+        viewItemsCategory.clear();
         try {
 // Заполняем Модель спаршенными данными
             for (int i=0; i<array.length(); ++i) {

@@ -16,11 +16,9 @@ import java.util.List;
 public class BasketAdapterT extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
     private final List<Object> listRecyclerItem;
-    String s;
-    public BasketAdapterT(Context context, List<Object> listRecyclerItem,String s) {
+    public BasketAdapterT(Context context, List<Object> listRecyclerItem) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
-        this.s = s;
     }
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         // Присваиваем поля для заполнения элемента RecyclerView
@@ -40,14 +38,14 @@ public class BasketAdapterT extends RecyclerView.Adapter<RecyclerView.ViewHolder
 // Заполняем элемент данными
         BasketAdapterT.ItemViewHolder _holder = (BasketAdapterT.ItemViewHolder) holder;
         CatalogModel catalogModel = (CatalogModel) listRecyclerItem.get(position);
-        s = s+".00";
-        if(catalogModel.getPrice().equals(s)){
-            _holder.title.setText(catalogModel.getTitle());
-            Double pricedb = Double.parseDouble(catalogModel.getPrice());
-            BigInteger price = BigInteger.valueOf(pricedb.intValue());
-            _holder.price.setText(price.toString());
+        for(int i = 1;i<=getItemCount();i++){
+            if(catalogModel.getId().equals("1")){
+                _holder.title.setText(catalogModel.getTitle());
+                Double pricedb = Double.parseDouble(catalogModel.getPrice());
+                BigInteger price = BigInteger.valueOf(pricedb.intValue());
+                _holder.price.setText(price.toString());
+            }
         }
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +53,5 @@ public class BasketAdapterT extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
 // Получает всёё количесво элементов RecyclerView
-        return 1;}
-
+        return listRecyclerItem.size();}
 }

@@ -162,43 +162,111 @@
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/edittextstyle"
                 android:textSize="15dp"
+                android:textAlignment="viewStart"
+                android:lines="7"
                 android:textColorHint="@color/hintcolor"
+                android:inputType="textMultiLine"
                 android:hint="Можете оставить свои пожелания"
                 android:layout_width="match_parent"
-                android:layout_height="128dp"/>
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:layout_marginTop="40dp"
                 android:orientation="vertical"
                 android:background="@color/edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_marginTop="24dp"
-                    android:text="Оплата Google Pay"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:paddingLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginTop="24dp"
-                    android:text="Промокод"
-                    android:textColor="@color/hintcolor"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:paddingLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="20dp"
+                        android:text="Оплата Google Pay"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/applepay"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginRight="20dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginTop="24dp"
+                        android:text="Промокод"
+                        android:textColor="@color/hintcolor"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="15dp"
+                        android:paddingLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/applepay"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginRight="20dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_marginTop="29dp"
-                    android:text="анализ"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:paddingLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/countanalises"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="17dp"
+                        android:paddingLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/analises"
+                        android:text="анализ"
+                        android:paddingLeft="6dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/countanalises"/>
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toStartOf="@+id/textView3" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="20dp"
+                        android:text="₽"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <TextView
                     android:id="@+id/btnNext"
                     android:textSize="17dp"

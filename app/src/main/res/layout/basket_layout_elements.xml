@@ -4,26 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="16dp"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="138dp"
         android:orientation="vertical"
         android:background="@drawable/catalog_layout_style">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
-                android:fontFamily="sans-serif-medium"
                 android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:padding="16dp"
                 android:text="id"
-                android:textSize="16dp"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
 
             <ImageView
+                android:id="@+id/removeelement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="21dp"
@@ -34,8 +39,10 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -72,7 +79,32 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/countofpatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:paddingTop="6dp"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/patient"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:paddingTop="6dp"
+                android:text="пациент"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -90,6 +122,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/minuspatient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -98,6 +131,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/pluspatient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/patientplus"
@@ -107,6 +141,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

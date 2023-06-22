@@ -44,6 +44,7 @@
     <EditText
         android:id="@+id/editname"
         android:padding="10dp"
+        android:inputType="textPersonName"
         android:layout_marginTop="25dp"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/edittextstyle"
@@ -55,6 +56,7 @@
     <EditText
         android:id="@+id/editpatronymic"
         android:padding="10dp"
+        android:inputType="textPersonName"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/edittextstyle"
@@ -66,6 +68,7 @@
     <EditText
         android:id="@+id/editsurname"
         android:padding="10dp"
+        android:inputType="textPersonName"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/edittextstyle"

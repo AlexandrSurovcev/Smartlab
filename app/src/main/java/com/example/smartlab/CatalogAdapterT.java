@@ -22,8 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +29,16 @@ import java.util.List;
 public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final Context context;
     private final List<Object> listRecyclerItem;
-    private final TextView txtPrice;
+    private final TextView txtPrice,titleobj,priceobj;
     private final RelativeLayout layout;
-    private ArrayList<Object> arrPackage;
-    SharedPreferences cartItems;
     Double totalPrice = 0.0;
-    public CatalogAdapterT(Context context, List<Object> listRecyclerItem, TextView txtPrice, RelativeLayout layout) {
+    public CatalogAdapterT(Context context, List<Object> listRecyclerItem, TextView txtPrice, RelativeLayout layout,TextView titleobj,TextView priceobj) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
         this.txtPrice = txtPrice;
-        this.layout = layout;}
+        this.layout = layout;
+        this.titleobj = titleobj;
+        this.priceobj=priceobj;}
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         // Присваиваем поля для заполнения элемента RecyclerView
         TextView id, title, description, price,time_result,btnAdd;
@@ -52,17 +50,7 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
             time_result = (TextView)itemView.findViewById(R.id.time_result);
             price=(TextView) itemView.findViewById(R.id.price);
             btnAdd=(TextView)itemView.findViewById(R.id.add);
-            btnAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-            public void onClick(View view) {
-                adddeletebtnstyle(btnAdd,price);
-                BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
-                txtPrice.setText(price1+" ₽");
-                if(txtPrice.getText().equals("0 ₽")){
-                    layout.setVisibility(View.INVISIBLE);
-                }else layout.setVisibility(View.VISIBLE);
-            }
-        });}}
+            }}
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -81,24 +69,16 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         _holder.price.setText(price.toString());
         _holder.time_result.setText(catalogModel.getTimeResult());
         _holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            boolean isPressed = false;
             @Override
             public void onClick(View view) {
-                arrPackage = new ArrayList<>();
-                if(!isPressed){
-                    addedItems[position] = true;
-                    arrPackage.add(String.valueOf(catalogModel.getId()));
-                    arrPackage.add(String.valueOf(catalogModel.getTitle()));
-                    arrPackage.add(String.valueOf(catalogModel.getDescription()));
-                    arrPackage.add(String.valueOf(catalogModel.getPrice()));
-                    arrPackage.add(String.valueOf(catalogModel.getTimeResult()));
-                    arrPackage.add(String.valueOf(catalogModel.getPreparation()));
-                    arrPackage.add(String.valueOf(catalogModel.getBio()));
-                    Gson gson = new Gson();
-                    String json = gson.toJson(arrPackage);
-                    SharedPreferences.Editor editor = cartItems.edit();
 
-                }
+                adddeletebtnstyle(_holder.btnAdd,position);
+
+                BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
+                txtPrice.setText(price1+" ₽");
+                if(txtPrice.getText().equals("0 ₽")){
+                    layout.setVisibility(View.INVISIBLE);
+                }else layout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -112,13 +92,13 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
                 String biodialog=catalogModel.getBio();
                 Double pricedb = Double.parseDouble(catalogModel.getPrice());
 
-                showBottomDialog(titledialog,descriptiondialog,timedialog,preparationdialog,biodialog,pricedb,_holder.btnAdd);}});}
+                showBottomDialog(titledialog,descriptiondialog,timedialog,preparationdialog,biodialog,pricedb,_holder.btnAdd,position);}});}
     @Override
     public int getItemCount() {
 // Получает всёё количесво элементов RecyclerView
         return listRecyclerItem.size();}
 
-    private void showBottomDialog(String title,String description, String time,String preparation, String bio,Double price,TextView button) {
+    private void showBottomDialog(String title,String description, String time,String preparation, String bio,Double price,TextView button,int position) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.catalog_description_layout);
@@ -142,8 +122,11 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         btnAdd1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adddeletebtnstyle1(button,price);
 
+                adddeletebtnstyle(button,position);
+
+                BigInteger price1 = BigInteger.valueOf(totalPrice.intValue());
+                txtPrice.setText(price1+" ₽");
                 if(txtPrice.getText().equals("0 ₽")){
                     layout.setVisibility(View.INVISIBLE);
                 }else layout.setVisibility(View.VISIBLE);
@@ -162,15 +145,26 @@ public class CatalogAdapterT extends  RecyclerView.Adapter<RecyclerView.ViewHold
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-    protected void adddeletebtnstyle(TextView textView,TextView price){
+    protected void adddeletebtnstyle(TextView textView,int position){
         if(textView.getText().equals("Добавить")){
             textView.setText("Убрать");
-            totalPrice+=Double.parseDouble(price.getText().toString());
+            CatalogModel catalogModel = (CatalogModel) listRecyclerItem.get(position);
+            titleobj.setText(titleobj.getText().toString()+";"+catalogModel.getTitle());
+            priceobj.setText(priceobj.getText().toString()+";"+ catalogModel.getPrice());
+            totalPrice+=Double.parseDouble(catalogModel.getPrice());
             textView.setBackgroundResource(R.drawable.addpatientstyle);
             textView.setTextColor(ContextCompat.getColor(context, R.color.blue));
         }else{
             textView.setText("Добавить");
-            totalPrice-=Double.parseDouble(price.getText().toString());
+            CatalogModel catalogModel = (CatalogModel) listRecyclerItem.get(position);
+            String m="";
+            String[] titler = titleobj.getText().toString().split(";");
+            for (int i = 0; i<titler.length;i++){
+                if(titler[i].equals(catalogModel.getTitle()))titler[i]="";
+                else m+=titler[i]+";";
+            }
+            titleobj.setText(m);
+            totalPrice-=Double.parseDouble(catalogModel.getPrice());
             textView.setBackgroundResource(R.drawable.enabledtextview);
             textView.setTextColor(ContextCompat.getColor(context, R.color.white));
         }

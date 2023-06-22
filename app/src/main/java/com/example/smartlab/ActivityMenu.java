@@ -2,7 +2,7 @@ package com.example.smartlab;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -44,6 +44,13 @@ public class ActivityMenu extends AppCompatActivity implements BottomNavigationV
                     return true;
             }
             return false;
-
         }
+
+
+    public void onNavigationItemMenu(int item){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if(item ==1){
+            fragmentTransaction.replace(R.id.navigation_profile, profileFragment);
+        }
+    }
     }

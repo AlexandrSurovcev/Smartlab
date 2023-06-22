@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Order extends AppCompatActivity {
-    TextView dateshow,patientsList;
+    TextView dateshow,patientsList,countanalises,analises,price;
     AutoCompleteTextView patientsChoice;
     //PHONE
     EditText phoneEdit;
@@ -41,6 +41,16 @@ public class Order extends AppCompatActivity {
         preferences = getSharedPreferences("UserInfo", 0);
         //НОМЕР ТЕЛЕФОНА
         phoneEdit = findViewById(R.id.phoneEdit);
+        analises = findViewById(R.id.analises);
+        countanalises = findViewById(R.id.countanalises);
+        Integer count = Integer.valueOf(preferences.getString("countanalises",null));
+        countanalises.setText(preferences.getString("countanalises",null));
+
+        if(count>1&&count<5)analises.setText("анализа");
+        else if(count>=5)analises.setText("анализов");
+        else analises.setText("анализ");
+        price = findViewById(R.id.price);
+        price.setText(preferences.getString("price",null));
         phoneEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -9,10 +9,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SignLogin extends AppCompatActivity {
 TextView btnNext,mail;
 EnableTextView ETV = new EnableTextView();
+boolean email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +32,21 @@ EnableTextView ETV = new EnableTextView();
             public void afterTextChanged(Editable editable) {
                 String emailPattern = "[a-zA-Z0-9._]+@[a-z]+\\.+[a-z]+";
                 if(mail.getText().toString().matches(emailPattern)){
+                    email=true;
                     ETV.onEnableBtn(btnNext,getApplicationContext());
-                }else ETV.onDisableBtn(btnNext,getApplicationContext());
+                }else {
+                    email=false;
+                    ETV.onDisableBtn(btnNext,getApplicationContext());
+                }
             }
         });
     }
     //ПОЛУЧИТЬ КОД
     public void onClick1(View view){
-        Intent intent = new Intent(SignLogin.this, codemail.class);
-        startActivity(intent);
+        if(email){
+            Intent intent = new Intent(SignLogin.this, codemail.class);
+            startActivity(intent);
+        }else Toast.makeText(SignLogin.this, "Неверно введена почта", Toast.LENGTH_SHORT).show();
     }
     //С ПОМОЩЬЮ ЯНДЕКСА
     public void Next(View view){

@@ -36,7 +36,7 @@ public class Profile extends Fragment {
     ImageView avatar;
     static final int GALLERY_REQUEST = 1;
     TextView btnSave,editname,editpatronymic,editsurname,editdateofbirth,gendersList;
-    boolean name,patronymic,surname,dateofbirth,genderbool,btnEnabled;
+    boolean name,patronymic,surname,dateofbirth,genderbool,btnEnabled=true;
     EnableTextView ETV = new EnableTextView();
     Calendar calendar = Calendar.getInstance();
     @Override
@@ -45,6 +45,7 @@ public class Profile extends Fragment {
         //поля ввода
         editname = v.findViewById(R.id.editname);
         avatar = v.findViewById(R.id.avatarka);
+        btnSave = v.findViewById(R.id.btnSave);
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,18 +200,35 @@ public class Profile extends Fragment {
                 }
             }
         });
-        return v;
-    }
-    //ДАТА
-    public void getdateBtn(View view){
-        new DatePickerDialog(getContext(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-    // установка начальных даты
-    private void setInitialDate() {
+        editdateofbirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getContext(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnEnabled) {
+                    String nameValue = editname.getText().toString();
+                    String patronymicValue = editpatronymic.getText().toString();
+                    String surnameValue = editsurname.getText().toString();
+                    String dateValue = editdateofbirth.getText().toString();
+                    String genderValue = gendersList.getText().toString();
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("name", nameValue);
+                    editor.putString("patronymic", patronymicValue);
+                    editor.putString("surname", surnameValue);
+                    editor.putString("date", dateValue);
+                    editor.putString("gender", genderValue);
+                    editor.putBoolean("createdcard",true);
+                    editor.apply();
+                    Toast.makeText(getContext(), "Готово", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        editdateofbirth.setText(DateUtils.formatDateTime(getContext(),
-                calendar.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        return v;
     }
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
@@ -221,23 +239,11 @@ public class Profile extends Fragment {
             setInitialDate();
         }
     };
-    //КНОПКА СОХРАНИТЬ
-    public void onSave(View view) {
-        if (btnEnabled) {
-            String nameValue = editname.getText().toString();
-            String patronymicValue = editpatronymic.getText().toString();
-            String surnameValue = editsurname.getText().toString();
-            String dateValue = editdateofbirth.getText().toString();
-            String genderValue = gendersList.getText().toString();
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("name", nameValue);
-            editor.putString("patronymic", patronymicValue);
-            editor.putString("surname", surnameValue);
-            editor.putString("date", dateValue);
-            editor.putString("gender", genderValue);
-            editor.apply();
-            Toast.makeText(getContext(), "Готово", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(getContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
+    private void setInitialDate() {
+
+        editdateofbirth.setText(DateUtils.formatDateTime(getContext(),
+                calendar.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {

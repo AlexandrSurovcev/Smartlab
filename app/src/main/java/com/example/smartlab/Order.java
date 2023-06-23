@@ -2,6 +2,7 @@ package com.example.smartlab;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -21,16 +22,25 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Order extends AppCompatActivity {
-    TextView dateshow,patientsList,countanalises,analises,price,btnNext;
+    TextView dateshow,patientsList,countanalises,analises,price,btnNext,perem;
     AutoCompleteTextView patientsChoice;
     //PHONE
     EditText phoneEdit;
     PhoneKit phoneKit = new PhoneKit();
+    private RecyclerView listAnalises;
+    Double totalprice = 0.0;
+    boolean editdate,editperson,editphone,btnnextenabled;
 
     SharedPreferences preferences;
     Calendar calendar = Calendar.getInstance();
@@ -42,15 +52,20 @@ public class Order extends AppCompatActivity {
         //НОМЕР ТЕЛЕФОНА
         phoneEdit = findViewById(R.id.phoneEdit);
         analises = findViewById(R.id.analises);
+        listAnalises = findViewById(R.id.listAnalises);
         countanalises = findViewById(R.id.countanalises);
+        perem = findViewById(R.id.perem);
         Integer count = Integer.valueOf(preferences.getString("countanalises",null));
         countanalises.setText(preferences.getString("countanalises",null));
-
+        String[]analyses = preferences.getString("analises",null).split(";");
+        String[]prices = preferences.getString("prices",null).split(";");
+        boolean createdcard = preferences.getBoolean("createdcard",false);
+        //Изменение текста анализа
         if(count>1&&count<5)analises.setText("анализа");
         else if(count>=5)analises.setText("анализов");
         else analises.setText("анализ");
         price = findViewById(R.id.price);
-        price.setText(preferences.getString("price",null));
+        //НОМЕР ТЕЛЕФОНА
         phoneEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -65,9 +80,20 @@ public class Order extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 phoneKit.phoneKit(editable);
+                if(phoneEdit.length()!=0){
+                    editphone = true;
+                }else editphone = false;
+                if(editphone&&editdate&&editperson){
+                    btnNext.setBackgroundResource(R.drawable.enabledbutton);
+                    btnnextenabled = true;
+                }
+                else {
+                    btnNext.setBackgroundResource(R.drawable.disabledbutton);
+                    btnnextenabled = false;
+                }
             }
         });
-
+        //ВЫБОР ДАТЫ
         dateshow = findViewById(R.id.dateshow);
         dateshow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +101,33 @@ public class Order extends AppCompatActivity {
                 showBottomDialog();
             }
         });
+        dateshow.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(dateshow.length()!=0){
+                    editdate = true;
+                }else editdate = false;
+                if(editphone&&editdate&&editperson){
+                    btnNext.setBackgroundResource(R.drawable.enabledbutton);
+                    btnnextenabled = true;
+                }
+                else {
+                    btnNext.setBackgroundResource(R.drawable.disabledbutton);
+                    btnnextenabled = false;
+                }
+            }
+        });
+        //ВЫБОР ПАЦИЕНТА
         String patient1 = preferences.getString("surname",null)+" "+preferences.getString("name",null);
         String[] patientslist = {patient1};
         patientsChoice = findViewById(R.id.patientsChoice);
@@ -94,21 +147,105 @@ public class Order extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                patientsList.setText(patientsChoice.getText().toString());
-                String pol = preferences.getString("gender",null);
-                if(pol.equals("Мужской")){
-                    patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.male),null,null,null);
-                }else  patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.female),null,null,null);
+                if(createdcard){
+                    patientsList.setText(patientsChoice.getText().toString());
+                    String pol = preferences.getString("gender",null);
+                    if(pol.equals("Мужской")){
+                        patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.male),null,null,null);
+                    }else  patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.female),null,null,null);
+                    if(patientsChoice.length()!=0){
+                        editperson = true;
+                    }else editperson = false;
+                    if(editphone&&editdate&&editperson){
+                        btnNext.setBackgroundResource(R.drawable.enabledbutton);
+                        btnnextenabled = true;
+                    }
+                    else {
+                        btnNext.setBackgroundResource(R.drawable.disabledbutton);
+                        btnnextenabled = false;
+                    }
+                }else Toast.makeText(getApplicationContext(),"Зарегистрируйтесь",Toast.LENGTH_SHORT).show();
             }
         });
         btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Order.this, PayingActivity.class);
-                startActivity(intent); 
+                if(btnnextenabled){
+                    Intent intent = new Intent(Order.this, PayingActivity.class);
+                    startActivity(intent);
+                }else Toast.makeText(Order.this, "Не все поля заполнены", Toast.LENGTH_SHORT).show();
             }
         });
+        perem.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Double pricedeletedanalys = Double.parseDouble(perem.getText().toString());
+                Double priceofanalyses = Double.parseDouble(price.getText().toString());
+                priceofanalyses = priceofanalyses - pricedeletedanalys;
+                BigInteger pricetotal = BigInteger.valueOf(priceofanalyses.intValue());
+                price.setText(pricetotal.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        countanalises.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int count = Integer.parseInt(countanalises.getText().toString());
+                if(count<5&&count>1)analises.setText("анализа");
+                else if(count>=5||count ==0)analises.setText("анализов");
+                else analises.setText("анализ");
+                if(count != 0&&editphone&&editdate&&editperson){
+                    btnnextenabled=true;
+                    btnNext.setBackgroundResource(R.drawable.enabledbutton);
+                }else{
+                    btnnextenabled = false;
+                    btnNext.setBackgroundResource(R.drawable.disabledbutton);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        //Заполнение данными выбранных анализов
+        List<BasketModel> orderModel = new ArrayList<>();
+        RecyclerView.Adapter orderAdapterT = new OrderAdapterT(this,orderModel,perem,countanalises);
+
+
+        listAnalises.setAdapter(orderAdapterT);
+        orderModel.clear();
+        for (int i = 0;i<analyses.length;i++){
+            if(analyses[i].length()!=0){
+                Double price =Double.parseDouble(prices[i]);
+                BigInteger price2 = BigInteger.valueOf(price.intValue());
+                totalprice+=price;
+                orderModel.add(new BasketModel("",analyses[i],price2.toString()));
+
+                orderAdapterT.notifyItemInserted(orderModel.size()-1);
+
+            }
+        }
+        BigInteger pricetotal = BigInteger.valueOf(totalprice.intValue());
+        price.setText(pricetotal.toString());
+        orderAdapterT.notifyItemInserted(orderModel.size()-1);
 
     }
 
@@ -157,7 +294,7 @@ public class Order extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateshow.setText(dayChoice.getText() + " " + time);
+                dateshow.setText(daysList.getText() + " " + time);
                 dateshow.setTextColor(ContextCompat.getColor(Order.this, R.color.black));
                 dialog.dismiss();
             }

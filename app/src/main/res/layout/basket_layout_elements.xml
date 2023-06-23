@@ -19,11 +19,11 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="290dp"
+                android:layout_height="90dp"
                 android:fontFamily="sans-serif-medium"
                 android:padding="16dp"
-                android:text="id"
+                android:text="title"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
 

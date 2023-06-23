@@ -3,6 +3,7 @@ package com.example.smartlab;
 import static com.example.smartlab.R.layout.fragment_analys;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -121,7 +122,6 @@ public class Analys extends Fragment {
             }
         });
         Double totalprice=0.0;
-        int countanalises = title.split(";").length - 1;
         listBasket.setAdapter(adapterBasket);
         basketModels.clear();
         modelUpdate(title,cena,totalprice,basketModels,adapterBasket,price);
@@ -138,6 +138,8 @@ public class Analys extends Fragment {
                     int m = basketModels.size();
                     editor.putString("price", price.getText().toString());
                     editor.putString("countanalises", String.valueOf(m));
+                    editor.putString("analises",txtTitle.getText().toString());
+                    editor.putString("prices",txtCena.getText().toString());
                     editor.apply();
                     Intent intent = new Intent(getActivity(), Order.class);
                     startActivity(intent);

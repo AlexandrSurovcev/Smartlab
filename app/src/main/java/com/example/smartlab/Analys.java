@@ -128,25 +128,20 @@ public class Analys extends Fragment {
         //ПЕРЕЙТИ К ЗАКАЗУ
         TextView btnToOrder = dialog.findViewById(R.id.btnNext);
         preferences = getActivity().getSharedPreferences("UserInfo", 0);
-        if(preferences.getBoolean("createdcard",false))createdcard=true;
-        else {
-            btnToOrder.setBackgroundResource(R.drawable.disabledbutton);
-        }
 
         btnToOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(createdcard){
+
                     preferences = getActivity().getSharedPreferences("UserInfo", 0);
                     SharedPreferences.Editor editor = preferences.edit();
+                    int m = basketModels.size();
                     editor.putString("price", price.getText().toString());
-                    editor.putString("countanalises", String.valueOf(countanalises));
+                    editor.putString("countanalises", String.valueOf(m));
                     editor.apply();
                     Intent intent = new Intent(getActivity(), Order.class);
                     startActivity(intent);
-                }else{
-                    ((ActivityMenu)getActivity()).onNavigationItemMenu(1);
-                }
+
             }
         });
         ImageView btnBack = dialog.findViewById(R.id.btnBack);

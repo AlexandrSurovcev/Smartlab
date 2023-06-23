@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PayingActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Оплата"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/imageView2"
+        android:layout_marginTop="164dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/illustration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/check"
+        android:layout_marginTop="29dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/addpatientstyle"
+        android:fontFamily="sans-serif-medium"
+        android:paddingVertical="16dp"
+        android:text="Чек покупки"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <TextView
+        android:id="@+id/onMain"
+        android:visibility="invisible"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/enabledbutton"
+        android:fontFamily="sans-serif-medium"
+        android:paddingVertical="16dp"
+        android:text="На главную"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/check" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:indeterminateDrawable="@drawable/progress_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/infopaying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="Связываемся с банком..."
+        android:textColor="@color/hintcolor"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

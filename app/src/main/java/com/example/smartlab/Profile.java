@@ -1,11 +1,14 @@
 package com.example.smartlab;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.smartlab.R.layout.fragment_analys;
 import static com.example.smartlab.R.layout.fragment_profile;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,8 @@ import java.util.Calendar;
 
 public class Profile extends Fragment {
     SharedPreferences preferences;
+    ImageView avatar;
+    static final int GALLERY_REQUEST = 1;
     TextView btnSave,editname,editpatronymic,editsurname,editdateofbirth,gendersList;
     boolean name,patronymic,surname,dateofbirth,genderbool,btnEnabled;
     EnableTextView ETV = new EnableTextView();
@@ -38,6 +44,15 @@ public class Profile extends Fragment {
         View v = inflater.inflate(fragment_profile, container, false);
         //поля ввода
         editname = v.findViewById(R.id.editname);
+        avatar = v.findViewById(R.id.avatarka);
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            }
+        });
         editpatronymic = v.findViewById(R.id.editpatronymic);
         editsurname = v.findViewById(R.id.editsurname);
         editdateofbirth = v.findViewById(R.id.editdateofbirth);
@@ -224,4 +239,24 @@ public class Profile extends Fragment {
             Toast.makeText(getContext(), "Готово", Toast.LENGTH_SHORT).show();
         } else Toast.makeText(getContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        avatar = (ImageView) getActivity().findViewById(R.id.avatarka);
+
+        switch (requestCode) {
+            case GALLERY_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    avatar.setImageURI(selectedImage);
+                }
+        }
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+
 }

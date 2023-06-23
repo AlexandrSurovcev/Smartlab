@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Order extends AppCompatActivity {
-    TextView dateshow,patientsList,countanalises,analises,price;
+    TextView dateshow,patientsList,countanalises,analises,price,btnNext;
     AutoCompleteTextView patientsChoice;
     //PHONE
     EditText phoneEdit;
@@ -99,6 +99,14 @@ public class Order extends AppCompatActivity {
                 if(pol.equals("Мужской")){
                     patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.male),null,null,null);
                 }else  patientsList.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.female),null,null,null);
+            }
+        });
+        btnNext = findViewById(R.id.btnNext);
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Order.this, PayingActivity.class);
+                startActivity(intent); 
             }
         });
 
